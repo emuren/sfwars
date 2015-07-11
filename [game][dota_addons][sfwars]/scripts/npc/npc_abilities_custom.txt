@@ -6,44 +6,47 @@
 	//=================================================================================================================
 	// Templar Assassin: Refraction Holdout
 	//=================================================================================================================
-	"templar_assassin_refraction_holdout"
-	{
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_NO_TARGET | DOTA_ABILITY_BEHAVIOR_IMMEDIATE"
-		"AbilityUnitDamageType"			"DAMAGE_TYPE_PHYSICAL"	
+	"nevermore_wudi"
+{
+        "BaseClass"                                        "ability_datadriven"
+		"MaxLevel"						"1"
+        "AbilityBehavior"                        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 
-		// Casting
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCastPoint"				"0.0 0.0 0.0 0.0"
+		"AbilityTextureName" "nevermore_wudi"
 
-		// Time		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"17.0 17.0 17.0 17.0"
-
-		// Cost
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"100"
-		
-		// Special
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
+		"prechache"
+		{ 
+			"particle"		"particles\items_fx\black_king_bar_avatar.vpcf"		
+		}
+		"Modifiers"
+        {
+			"modifier_nevermore_wudi_pre"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"damage_absorb"				"200 300 400 500"
+				"IsBuff" "1"
+				"IsHidden" "1"
+				"Passive" "1"
+				"OnRespawn"
+				{
+						"ApplyModifier"
+					{
+						"ModifierName"      		"modifier_hero_momian"    //相当于要调用的函数
+						"Target"      				"CASTER"         //相当于传递单位带上面那个函数
+					}
+				}
 			}
-			"02"
+			"modifier_hero_momian"
 			{
-				"var_type"					"FIELD_INTEGER"
-				"bonus_damage"				"20 40 60 80"
-			}
-			"04"
-			{
-				"var_type"					"FIELD_FLOAT"
-				"duration"					"17.0 17.0 17.0 17.0"
+				"Duration"    "3"       
+				"Passive" "1"
+				"TextureName" "nevermore_wudi"
+				"EffectName" "particles\items_fx\black_king_bar_avatar.vpcf"
+				"EffectAttachType" "follow_origin"
+				"States"
+				{
+					"MODIFIER_STATE_MAGIC_IMMUNE" "MODIFIER_STATE_VALUE_ENABLED"
+				}
 			}
 		}
-	}
+}
+
 }

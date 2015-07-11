@@ -9,13 +9,25 @@
 	"npc_dota_hero_nevermore_datadriven"
 	{
 		"override_hero"			"npc_dota_hero_nevermore"
-		"AbilityLayout"			"5"
+		//"AbilityLayout"			"6"
 		"Ability1"			"nevermore_shadowraze1"
 		"Ability2"			"nevermore_shadowraze2"
 		"Ability3"			"nevermore_shadowraze3"
-		"Ability4"			"nevermore_necromastery"
-		"Ability5" 			""
+		"Ability4" 			"nevermore_necromastery"
+		"Ability5"			"nevermore_wudi"
 		"Ability6" 			"nevermore_requiem"
-		//"AttackCapabilities"        	"DOTA_UNIT_CAP_NO_ATTACK"
+		"AttackCapabilities"        	"DOTA_UNIT_CAP_NO_ATTACK"
+		"BountyXP"                  "0"                     // 经验奖励
+        "BountyGoldMin"             "0"                     // 最小金钱奖励
+        "BountyGoldMax"             "0"  
+		"StatusHealth"              "700"       // 基础生命值
+        "StatusHealthRegen"         "0.5"      
+		"HPGain"                    "50"                   // 升级增加生命值上限
+        "DamageGain"                "0"                    // 升级增加攻击力
+        "ArmorGain"                 "0"                    // 升级增加护甲
+        "MagicResistGain"           "0"                    // 升级增加魔抗
+        "MoveSpeedGain"             "2"                    // 升级增加移动速度
+        "BountyGain"                "0"                    // 升级增加赏金奖励
+        "XPGain"                    "0"                   // 升级增加经验值上限
 	}
 }

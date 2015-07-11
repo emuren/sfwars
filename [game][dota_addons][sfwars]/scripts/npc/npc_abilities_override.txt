@@ -38,6 +38,7 @@
 	{
 		// General
 		//-------------------------------------------------------------------------------------------------------------
+		
 		"MaxLevel"						"1"
 		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_PASSIVE"
 		"OnCastbar"					"0"
@@ -64,7 +65,7 @@
 			"04"
 			{
 				"var_type"						"FIELD_INTEGER"
-				"necromastery_souls_hero_bonus"	"36"
+				"necromastery_souls_hero_bonus"	"0"
 			}
 			
 		}
@@ -76,7 +77,7 @@
 		"AbilityManaCost"				"0"
 		"RequiredLevel"          "2"
 		"LevelsBetweenUpgrades"  "2"
-	
+
 	}
 	
 }

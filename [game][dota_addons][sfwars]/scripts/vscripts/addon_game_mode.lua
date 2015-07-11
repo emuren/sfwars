@@ -16,7 +16,8 @@ end
 
 -- Create the game mode when we activate
 function Activate()
-	CSfwarsGameMode:InitGameMode()
+	GameRules.AddonTemplate = CSfwarsGameMode()
+	GameRules.AddonTemplate:InitGameMode()
 end
 
 function CSfwarsGameMode:InitGameMode()
@@ -65,9 +66,11 @@ function CSfwarsGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetRecommendedItemsDisabled( true )
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel( 10 )
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap( CSfwarsGameMode, "BountyRunePickupFilter" ), self )
+	GameRules:GetGameModeEntity():SetRuneSpawnFilter( Dynamic_Wrap( CSfwarsGameMode, "FilterRuneSpawn" ), self )
+	GameRules:GetGameModeEntity():SetCustomGameForceHero( "npc_dota_hero_never more" )
 	
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( CSfwarsGameMode, 'OnGameRulesStateChange' ), self )
-	ListenToGameEvent("dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnPlayerPicked"), self)
+	ListenToGameEvent("dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnNPCSpawned"), self)
 	
 	
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
@@ -117,13 +120,22 @@ function CSfwarsGameMode:BountyRunePickupFilter( filterTable )
     filterTable["gold_bounty"] = 0.2*filterTable["gold_bounty"]
     return true
 end
+function CSfwarsGameMode:FilterRuneSpawn( filterTable )
+	--DeepPrintTable(filterTable)
+	--for k, v in pairs( filterTable ) do
+	--	print("zheshi111: " .. k .. "zheshi222 " .. v )
+	--end
+	--return true
+end
 
-
-function CSfwarsGameMode:OnPlayerPicked(keys)
-	print( "on player picked" )
-	DeepPrintTable(keys)
-	local unit = EntIndexToHScript( keys.heroindex )
-	if unit:IsHero() then
-	--unit:UpgradeAbility({"nevermore_necromastery",1})
+function CSfwarsGameMode:OnNPCSpawned(keys)
+	local unit =  EntIndexToHScript(keys.heroindex)
+	print(unit:GetAbilityCount())
+	if unit:IsHero() then                      --如果是英雄
+		local temp_auto6=unit:GetAbilityByIndex(3)
+		local temp_auto7=unit:GetAbilityByIndex(4)
+		temp_auto6:SetLevel(1)
+		temp_auto7:SetLevel(1)
+		unit:SetModifierStackCount("modifier_nevermore_necromastery",nil,36) 
 	end
 end
