@@ -1,8 +1,5 @@
 "lang"
 {
-        "Language"                "SChinese"  //声明语言，台湾就是TChinese
-        "Tokens"
-	{
 
 	"DOTA_GoodGuys"   								"蓝老虎"
 	"DOTA_BadGuys"    								"黄猴子"
@@ -14,11 +11,8 @@
 	"DOTA_Custom6"    								"青野猪"
 	"DOTA_Custom7"    								"橄榄蛇"
 	"DOTA_Custom8"    								"紫野马"
-	
-
-	
 	"custom_game_team_select_starting"				"正在开始游戏"
 
-	}
+
 }
 

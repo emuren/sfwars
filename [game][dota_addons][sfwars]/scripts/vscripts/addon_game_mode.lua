@@ -23,6 +23,7 @@ end
 function CSfwarsGameMode:InitGameMode()
 	print( "Template addon is loaded." )
 	
+
 	---------------------------------------------------------------------------------------
 	--设置队伍颜色
 	self.m_TeamColors = {}
@@ -45,29 +46,29 @@ function CSfwarsGameMode:InitGameMode()
 
 	self.TEAM_KILLS_TO_WIN = 20
 	
-	--GameRules:SetCustomGameEndDelay( 0 )
-	--GameRules:SetCustomVictoryMessageDuration( 10 )
-	--GameRules:SetPreGameTime( 1 )
+
 	GameRules:GetGameModeEntity():SetTopBarTeamValuesOverride( true )
 	GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible( false )
 	GameRules:SetSameHeroSelectionEnabled( true )
-	--GameRules:SetGoldTickTime( 2 )
-	--GameRules:SetGoldPerTick( 1 )
-	GameRules:SetRuneSpawnTime( 1 )
-	
+	GameRules:SetRuneSpawnTime( 15 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_5, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
+	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
 	GameRules:GetGameModeEntity():SetRuneEnabled( 0, false ) --Double Damage
-	GameRules:GetGameModeEntity():SetRuneEnabled( 1, true ) --Haste
-	GameRules:GetGameModeEntity():SetRuneEnabled( 2, true ) --Illusion
-	GameRules:GetGameModeEntity():SetRuneEnabled( 3, true ) --Invis
-	GameRules:GetGameModeEntity():SetRuneEnabled( 4, false ) --Regen
-	GameRules:GetGameModeEntity():SetRuneEnabled( 5, true ) --Bounty
+
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
 	GameRules:GetGameModeEntity():SetBuybackEnabled( false )
 	GameRules:GetGameModeEntity():SetRecommendedItemsDisabled( true )
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel( 10 )
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap( CSfwarsGameMode, "BountyRunePickupFilter" ), self )
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter( Dynamic_Wrap( CSfwarsGameMode, "FilterRuneSpawn" ), self )
-	GameRules:GetGameModeEntity():SetCustomGameForceHero( "npc_dota_hero_never more" )
 	
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( CSfwarsGameMode, 'OnGameRulesStateChange' ), self )
 	ListenToGameEvent("dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnNPCSpawned"), self)
@@ -121,16 +122,18 @@ function CSfwarsGameMode:BountyRunePickupFilter( filterTable )
     return true
 end
 function CSfwarsGameMode:FilterRuneSpawn( filterTable )
-	--DeepPrintTable(filterTable)
-	--for k, v in pairs( filterTable ) do
-	--	print("zheshi111: " .. k .. "zheshi222 " .. v )
-	--end
-	--return true
+
+		if ( tostring( filterTable["rune_type"] ) == "0" ) then
+			return false
+		else
+			return true
+		end
+
+
 end
 
 function CSfwarsGameMode:OnNPCSpawned(keys)
 	local unit =  EntIndexToHScript(keys.heroindex)
-	print(unit:GetAbilityCount())
 	if unit:IsHero() then                      --如果是英雄
 		local temp_auto6=unit:GetAbilityByIndex(3)
 		local temp_auto7=unit:GetAbilityByIndex(4)
