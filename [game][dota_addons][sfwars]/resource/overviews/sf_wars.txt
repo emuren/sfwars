@@ -1,0 +1,8 @@
+sf_wars
+{
+	material materials/overviews/sf_wars.vmat
+	pos_x -5184
+	pos_y 5248
+	scale 10.125
+}
+

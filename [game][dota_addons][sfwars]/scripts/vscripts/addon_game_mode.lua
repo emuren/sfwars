@@ -1,7 +1,13 @@
 -- Generated from template
 
 if CSfwarsGameMode == nil then
-	CSfwarsGameMode = class({})
+	_G.CSfwarsGameMode = class({})
+end
+
+require("game_init")
+
+if temp_flag == nil then
+	temp_flag = 0
 end
 
 function Precache( context )
@@ -20,37 +26,23 @@ function Activate()
 	GameRules.AddonTemplate:InitGameMode()
 end
 
+
+
 function CSfwarsGameMode:InitGameMode()
-	print( "Template addon is loaded." )
-	
 
-	---------------------------------------------------------------------------------------
-	--设置队伍颜色
-	self.m_TeamColors = {}
-	self.m_TeamColors[DOTA_TEAM_GOODGUYS] = { 52, 85, 255 }	--		Teal
-	self.m_TeamColors[DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }		--		Yellow
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_1] = { 197, 77, 168 }	--      Pink
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_2] = { 255, 108, 0 }		--		Orange
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_3] = { 61, 210, 150 }		--		Blue
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }	--		Green
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }		--		Brown
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }	--		Cyan
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }	--		Olive
-	self.m_TeamColors[DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }	--		Purple
-	for team = 0, (DOTA_TEAM_COUNT-1) do
-		color = self.m_TeamColors[ team ]
-		if color then
-			SetTeamCustomHealthbarColor( team, color[1], color[2], color[3] )
-		end
-	end
-
-	self.TEAM_KILLS_TO_WIN = 20
-	
+	XP_PER_LEVEL_TABLE = {
+		0,100,200,350,500,
+		650,800,1000,1200,1500,
+		1800,2200,2800,3500,4200,
+		5000,6000,7100,8500,10000,
+		12000,14000,16000,18000,21000
+	}
 
 	GameRules:GetGameModeEntity():SetTopBarTeamValuesOverride( true )
 	GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible( false )
 	GameRules:SetSameHeroSelectionEnabled( true )
-	GameRules:SetRuneSpawnTime( 15 )
+	GameRules:SetUseBaseGoldBountyOnHeroes( true )
+	GameRules:SetRuneSpawnTime( 30 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 1 )
@@ -61,20 +53,29 @@ function CSfwarsGameMode:InitGameMode()
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
-	GameRules:GetGameModeEntity():SetRuneEnabled( 0, false ) --Double Damage
+
 
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
 	GameRules:GetGameModeEntity():SetBuybackEnabled( false )
+	GameRules:GetGameModeEntity():SetStashPurchasingDisabled( true )
 	GameRules:GetGameModeEntity():SetRecommendedItemsDisabled( true )
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel( 10 )
+	GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
+	GameRules:GetGameModeEntity():SetUseCustomHeroLevels( true )
 	GameRules:GetGameModeEntity():SetBountyRunePickupFilter( Dynamic_Wrap( CSfwarsGameMode, "BountyRunePickupFilter" ), self )
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter( Dynamic_Wrap( CSfwarsGameMode, "FilterRuneSpawn" ), self )
 	
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( CSfwarsGameMode, 'OnGameRulesStateChange' ), self )
-	ListenToGameEvent("dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnNPCSpawned"), self)
-	
-	
+	ListenToGameEvent( "dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnNPCSpawned"), self)
+	ListenToGameEvent( "dota_team_kill_credit", Dynamic_Wrap( CSfwarsGameMode, 'OnTeamKillCredit' ), self )
+
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
+	--初始化游戏
+	if temp_flag == 0 then
+		CSfwarsGameMode:_InitGameStats()
+		temp_flag =1
+	end
+	
 end
 
 -- Evaluate the state of the game
@@ -92,24 +93,22 @@ function CSfwarsGameMode:OnGameRulesStateChange()
 	--print( "OnGameRulesStateChange: " .. nNewState )
 
 	if nNewState == DOTA_GAMERULES_STATE_HERO_SELECTION then
-		local numberOfPlayers = PlayerResource:GetPlayerCount()
-		if numberOfPlayers > 7 then
-			self.TEAM_KILLS_TO_WIN = 30
-		elseif numberOfPlayers > 4 and numberOfPlayers <= 7 then
-			self.TEAM_KILLS_TO_WIN = 25
-		else
-			self.TEAM_KILLS_TO_WIN = 20
-		end
 
-		CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = self.TEAM_KILLS_TO_WIN } )
 	end
 
 	if nNewState == DOTA_GAMERULES_STATE_PRE_GAME then
-
+		_GameStats['number_of_players'] = PlayerResource:GetPlayerCount()
+		if _GameStats['number_of_players'] > 7 then
+			_GameStats['score_to_win'] = 30
+		elseif _GameStats['number_of_players'] > 4 and _GameStats['number_of_players'] <= 7 then
+			_GameStats['score_to_win'] = 25
+		else
+			_GameStats['score_to_win'] = 20
+		end
+		CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = _GameStats['score_to_win'] } )
 	end
 
 	if nNewState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
-
 	end
 end
 
@@ -117,19 +116,17 @@ end
 -- Event: BountyRunePickupFilter
 --------------------------------------------------------------------------------
 function CSfwarsGameMode:BountyRunePickupFilter( filterTable )
-    filterTable["xp_bounty"] = 2*filterTable["xp_bounty"]
-    filterTable["gold_bounty"] = 0.2*filterTable["gold_bounty"]
+    filterTable["xp_bounty"] = 50
+    filterTable["gold_bounty"] = 20
     return true
 end
 function CSfwarsGameMode:FilterRuneSpawn( filterTable )
-
-		if ( tostring( filterTable["rune_type"] ) == "0" ) then
-			return false
-		else
-			return true
-		end
-
-
+	local sfwars_rune_type =  math.random( 5 ) 
+	if  sfwars_rune_type == 2 or sfwars_rune_type == nil then
+		sfwars_rune_type = 5
+	end
+	filterTable["rune_type"] = sfwars_rune_type
+	return true
 end
 
 function CSfwarsGameMode:OnNPCSpawned(keys)
@@ -142,3 +139,15 @@ function CSfwarsGameMode:OnNPCSpawned(keys)
 		unit:SetModifierStackCount("modifier_nevermore_necromastery",nil,36) 
 	end
 end
+
+function CSfwarsGameMode:OnTeamKillCredit( event )
+	local nKillerID = event.killer_userid
+	local nTeamID = event.teamnumber
+	local nTeamKills = event.herokills
+	local nKillsRemaining = _GameStats['score_to_win'] - nTeamKills
+	if nKillsRemaining <= 0 then
+		GameRules:SetCustomVictoryMessage( _GameStats["team_win_message"][nTeamID] )
+		GameRules:SetGameWinner( nTeamID )
+	end
+end
+

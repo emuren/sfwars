@@ -3,17 +3,12 @@
 {
 	"Version"		"1"
 
-	//=================================================================================================================
-	// Templar Assassin: Refraction Holdout
-	//=================================================================================================================
 	"nevermore_wudi"
 {
         "BaseClass"                                        "ability_datadriven"
 		"MaxLevel"						"1"
         "AbilityBehavior"                        	"DOTA_ABILITY_BEHAVIOR_PASSIVE"
-
 		"AbilityTextureName" "nevermore_wudi"
-
 		"prechache"
 		{ 
 			"particle"		"particles\items_fx\black_king_bar_avatar.vpcf"		
@@ -37,7 +32,7 @@
 			"modifier_hero_momian"
 			{
 				"Duration"    "3"       
-				"Passive" "1"
+				"Passive" "0"
 				"TextureName" "nevermore_wudi"
 				"EffectName" "particles\items_fx\black_king_bar_avatar.vpcf"
 				"EffectAttachType" "follow_origin"

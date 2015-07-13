@@ -18,16 +18,21 @@
 		"Ability6" 			"nevermore_requiem"
 		"AttackCapabilities"        	"DOTA_UNIT_CAP_NO_ATTACK"
 		"BountyXP"                  "0"                     // 经验奖励
-        "BountyGoldMin"             "0"                     // 最小金钱奖励
+        "BountyGoldMin"             "0"                    // 最小金钱奖励
         "BountyGoldMax"             "0"  
-		"StatusHealth"              "700"       // 基础生命值
+		"StatusHealth"              "320"       // 基础生命值
         "StatusHealthRegen"         "0.5"      
-		"HPGain"                    "50"                   // 升级增加生命值上限
+		"HPGain"                    "0"                   // 升级增加生命值上限
         "DamageGain"                "0"                    // 升级增加攻击力
         "ArmorGain"                 "0"                    // 升级增加护甲
         "MagicResistGain"           "0"                    // 升级增加魔抗
-        "MoveSpeedGain"             "2"                    // 升级增加移动速度
+        "MoveSpeedGain"             "0"                    // 升级增加移动速度
         "BountyGain"                "0"                    // 升级增加赏金奖励
         "XPGain"                    "0"                   // 升级增加经验值上限
+		"AttributeBaseStrength"     "20"                         // 基础力量
+        "AttributeStrengthGain"     "2.64"                         // 力量成长
+		"VisionDaytimeRange"        "1200"          // 白天视野范围
+        "VisionNighttimeRange"      "1000"           // 夜晚视野范围
+
 	}
 }
