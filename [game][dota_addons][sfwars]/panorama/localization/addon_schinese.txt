@@ -1,4 +1,4 @@
-"lang"
+"addon"
 {
 
 	"DOTA_GoodGuys"   								"蓝老虎"
@@ -12,6 +12,18 @@
 	"DOTA_Custom7"    								"橄榄蛇"
 	"DOTA_Custom8"    								"紫野马"
 	"custom_game_team_select_starting"				"正在开始游戏"
+	
+	"PointsToWin"									"需{d:points_to_win}分胜利"
+	"PointsToWin_CloseToVictory"					"仅需{d:points_to_win}分胜利"
+	"PointsToWin_VeryCloseToVictory"				"仅需{d:points_to_win}分胜利!"
+	"PointsToWin_Victory"							"胜利!"
+	"RecentScore"									"+{d:score}"
+	
+	"Unassigned"      								"Unassigned Team"
+	"Spectator"       								"Spectator Team"
+	"Neutrals"        								"Neutral Team"
+	"NoTeam"          								"No Team"
+
 
 
 }

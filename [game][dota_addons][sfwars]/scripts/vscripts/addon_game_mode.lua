@@ -144,9 +144,27 @@ function CSfwarsGameMode:OnTeamKillCredit( event )
 	local nTeamID = event.teamnumber
 	local nTeamKills = event.herokills
 	local nKillsRemaining = _GameStats['score_to_win'] - nTeamKills
+	
+	local broadcast_kill_event =
+	{
+		killer_id = event.killer_userid,
+		team_id = event.teamnumber,
+		team_kills = nTeamKills,
+		kills_remaining = nKillsRemaining,
+		victory = 0,
+		close_to_victory = 0,
+		very_close_to_victory = 0,
+	}
+	
 	if nKillsRemaining <= 0 then
 		GameRules:SetCustomVictoryMessage( _GameStats["team_win_message"][nTeamID] )
 		GameRules:SetGameWinner( nTeamID )
+		broadcast_kill_event.victory = 1
+	elseif nKillsRemaining == 1 then
+		broadcast_kill_event.very_close_to_victory = 1
+	elseif nKillsRemaining > 0 and nKillsRemaining <= 5 then
+		broadcast_kill_event.close_to_victory = 1
 	end
+	CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
 end
 

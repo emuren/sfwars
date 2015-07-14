@@ -119,9 +119,10 @@
 
 #PointsToWin
 {
-    color: white;
+    color: yellow;
     horizontal-align: center;
-    font-size: 16px;
+    font-size: 18px;
+    font-weight:bold;
     visibility: collapse;
     overflow: noclip;
     text-shadow: 2px 2px 2px black;
@@ -171,17 +172,17 @@
 {
 	0%
 	{
-		transform: translateX( -4px ) rotateZ( -10deg );
+		transform: translateX( -4px ) rotateZ( -8deg );
 	}
 
 	50%
 	{
-		transform: translateX( 4px ) rotateZ( 10deg );
+		transform: translateX( 4px ) rotateZ( 8deg );
 	}
 	
 	100%
 	{
-		transform: translateX( -4px ) rotateZ( -10deg );
+		transform: translateX( -4px ) rotateZ( -8deg );
 	}
 }
 
@@ -195,7 +196,7 @@
 {
 	margin-left: 72px;
     horizontal-align: left;
-    color: white;
+    color: yellow;
     font-size: 32px;
     font-weight: bold;
     text-shadow: 3px 5px 5px black;
