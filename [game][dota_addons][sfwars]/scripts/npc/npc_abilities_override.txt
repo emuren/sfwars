@@ -12,7 +12,7 @@
 		"MaxLevel"						"7"
 		"AbilityCastPoint"				"0.67 0.67 0.67 0.67 0.67 0.67 0.67"
 		"AbilityCooldown"				"10.0 10.0 10.0 10.0 10.0 10.0 10.0"
-		"AbilityDamage"					"250 275 300 325 350 375 400"
+		"AbilityDamage"					"250 275 305 315 365 395 420"
 		"AbilityManaCost"				"0 0 0 0 0 0 0"
 		"LevelsBetweenUpgrades" 		"1"
 	}
@@ -21,7 +21,7 @@
 		"MaxLevel"						"7"
 		"AbilityCastPoint"				"0.67 0.67 0.67 0.67 0.67 0.67 0.67"
 		"AbilityCooldown"				"10.0 10.0 10.0 10.0 10.0 10.0 10.0"
-		"AbilityDamage"					"250 275 300 325 350 375 400"
+		"AbilityDamage"					"250 275 305 315 365 395 420"
 		"AbilityManaCost"				"0 0 0 0 0 0 0"
 		"LevelsBetweenUpgrades" 		"1"
 	}
@@ -30,7 +30,7 @@
 		"MaxLevel"						"7"
 		"AbilityCastPoint"				"0.67 0.67 0.67 0.67 0.67 0.67 0.67"
 		"AbilityCooldown"				"10.0 10.0 10.0 10.0 10.0 10.0 10.0"
-		"AbilityDamage"					"250 275 300 325 350 375 400"
+		"AbilityDamage"					"250 275 305 315 365 395 420"
 		"AbilityManaCost"				"0 0 0 0 0 0 0"
 		"LevelsBetweenUpgrades" 		"1"
 	}
@@ -73,7 +73,7 @@
 	
 	"nevermore_requiem"
 	{
-		"AbilityCooldown"				"0.0"
+		"AbilityCooldown"				"90.0"
 		"AbilityManaCost"				"0"
 		"RequiredLevel"          "2"
 		"LevelsBetweenUpgrades"  "2"
@@ -147,7 +147,7 @@
 
 	"item_blink"
 	{
-		"ItemCost"                              "100"
+		"ItemCost"                              "1500"
 		"AbilityCooldown" 			"20.0"
 		"SecretShop"    			"1"
 		"SideShop"    				"0"
@@ -155,7 +155,7 @@
 
 	"item_aegis"	//不朽
 	{
-		"ItemCost"                             	"1000"
+		"ItemCost"                             	"5500"
 		"ItemSellable"                       	"1"
 		"ItemDroppable"				"1"
         "ItemPurchasable"             		"1"
@@ -170,7 +170,7 @@
         "item_boots"
         {
 
-                "ItemCost"                                "75"
+                "ItemCost"                                "750"
 		"SecretShop"    			"1"
  
         }
@@ -192,7 +192,7 @@
     "item_manta"	//分身斧
     {
 
-        "ItemCost"                                "100"
+        "ItemCost"                                "1500"
 		"AbilityCooldown" 			"30.0"
         "SecretShop"    			"1"
 		"SideShop"    				"0"
@@ -301,20 +301,20 @@
     "item_bottle"
     {
 
-        "ItemCost"                                "50"
+        "ItemCost"                                "500"
         "SideShop"                        "1"
 		"SecretShop"    			"0"
     }
 	"item_tango"	//吃树
 	{
-		"ItemCost"						"10"
+		"ItemCost"						"125"
 		"ItemInitialCharges"			"5"
 		"SideShop"						"1"
 		"SecretShop"    			"0"
 	}
 	"item_flask"	//大血瓶
 	{
-		"ItemCost"						"20"
+		"ItemCost"						"180"
 		"SideShop"						"1"
 		"SecretShop"    			"0"
 		"AbilitySpecial"
@@ -333,7 +333,7 @@
 	}
 	"item_cheese"
 	{
-		"ItemCost"                             	"1000"
+		"ItemCost"                             	"4000"
 		"ItemSellable"                       	"1"
 		"ItemDroppable"				"1"
 		"ItemPurchasable"             		"1"
@@ -376,7 +376,7 @@
 		"AbilityManaCost"				"0"
 		// Item Info
 		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"100"
+		"ItemCost"						"1500"
 		"ItemSellable"					"1"
 		"SecretShop"    			"1"
 		"SideShop"    				"0"
@@ -426,7 +426,7 @@
 	{
 		"AbilityCooldown"				"90.0"
 		"AbilityManaCost"				"0"
-		"ItemCost"						"120"
+		"ItemCost"						"1800"
 		"SecretShop"    			"1"
 		"SideShop"    				"0"
 		"AbilitySpecial"
@@ -464,7 +464,7 @@
 	{
 		"AbilityCooldown"				"30.0"
 		"AbilityManaCost"				"0"
-		"ItemCost"						"100"
+		"ItemCost"						"1500"
 		"SecretShop"    			"1"
 		"SideShop"    				"0"
 		"AbilitySpecial"
@@ -591,7 +591,7 @@
 	{
 		"SecretShop"    			"1"
 		"SideShop"    				"0"
-		"ItemCost"						"200"
+		"ItemCost"						"2000"
 		"AbilitySpecial"
 		{
 			"01"

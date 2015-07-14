@@ -1,3 +1,10 @@
-""
+"AddonInfo"
 {
+	"TeamCount"		"10"
+	"maps"			"sf_wars"
+	"IsPlayable"	"1"
+	"rpg_example"
+	{
+		"MaxPlayers"                    "10"
+	}
 }

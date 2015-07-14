@@ -31,9 +31,9 @@ end
 function CSfwarsGameMode:InitGameMode()
 
 	XP_PER_LEVEL_TABLE = {
-		0,100,200,350,500,
-		650,800,1000,1200,1500,
-		1800,2200,2800,3500,4200,
+		0,240,480,740,1040,
+		1360,1680,2120,2520,3000,
+		3100,3200,3400,3500,4200,
 		5000,6000,7100,8500,10000,
 		12000,14000,16000,18000,21000
 	}
@@ -57,7 +57,6 @@ function CSfwarsGameMode:InitGameMode()
 
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
 	GameRules:GetGameModeEntity():SetBuybackEnabled( false )
-	GameRules:GetGameModeEntity():SetStashPurchasingDisabled( true )
 	GameRules:GetGameModeEntity():SetRecommendedItemsDisabled( true )
 	GameRules:GetGameModeEntity():SetCustomHeroMaxLevel( 10 )
 	GameRules:GetGameModeEntity():SetCustomXPRequiredToReachNextLevel( XP_PER_LEVEL_TABLE )
@@ -116,8 +115,8 @@ end
 -- Event: BountyRunePickupFilter
 --------------------------------------------------------------------------------
 function CSfwarsGameMode:BountyRunePickupFilter( filterTable )
-    filterTable["xp_bounty"] = 50
-    filterTable["gold_bounty"] = 20
+    filterTable["xp_bounty"] = 120
+    filterTable["gold_bounty"] = 100
     return true
 end
 function CSfwarsGameMode:FilterRuneSpawn( filterTable )
