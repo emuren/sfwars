@@ -17,9 +17,9 @@
 		"Ability5"			"nevermore_wudi"
 		"Ability6" 			"nevermore_requiem"
 		"AttackCapabilities"        	"DOTA_UNIT_CAP_NO_ATTACK"
-		"BountyXP"                  "0"                     // 经验奖励
-        "BountyGoldMin"             "0"                    // 最小金钱奖励
-        "BountyGoldMax"             "0"  
+		"BountyXP"                  "50"                     // 经验奖励
+        "BountyGoldMin"             "10"                    // 最小金钱奖励
+        "BountyGoldMax"             "50"  
 		"StatusHealth"              "320"       // 基础生命值
         "StatusHealthRegen"         "0.5"      
 		"HPGain"                    "0"                   // 升级增加生命值上限

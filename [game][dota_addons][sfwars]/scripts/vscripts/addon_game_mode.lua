@@ -1,7 +1,7 @@
 -- Generated from template
 
 if CSfwarsGameMode == nil then
-	_G.CSfwarsGameMode = class({})
+	CSfwarsGameMode = class({})
 end
 
 require("game_init")
@@ -9,15 +9,46 @@ require("game_init")
 if temp_flag == nil then
 	temp_flag = 0
 end
+function PrecacheEveryThingFromKV( context )
+	local kv_files = {"scripts/npc/npc_units_custom.txt","scripts/npc/npc_abilities_custom.txt","scripts/npc/npc_heroes_custom.txt","scripts/npc/npc_abilities_override.txt","scripts/npc/npc_items_custom.txt"}
+	for _, kv in pairs(kv_files) do
+		local kvs = LoadKeyValues(kv)
+		if kvs then
+			print("BEGIN TO PRECACHE RESOURCE FROM: ", kv)
+			PrecacheEverythingFromTable( context, kvs)
+		end
+	end
+    print("done loading shiping")
+end
+function PrecacheEverythingFromTable( context, kvtable)
+	for key, value in pairs(kvtable) do
+		if type(value) == "table" then
+			PrecacheEverythingFromTable( context, value )
+		else
+			if string.find(value, "vpcf") then
+				PrecacheResource( "particle",  value, context)
+				print("PRECACHE PARTICLE RESOURCE", value)
+			end
+			if string.find(value, "vmdl") then 	
+				PrecacheResource( "model",  value, context)
+				print("PRECACHE MODEL RESOURCE", value)
+			end
+			if string.find(value, "vsndevts") then
+				PrecacheResource( "soundfile",  value, context)
+				print("PRECACHE SOUND RESOURCE", value)
+			end
+		end
+	end
 
+   
+end
 function Precache( context )
-	--[[
-		Precache things we know we'll use.  Possible file types include (but not limited to):
-			PrecacheResource( "model", "*.vmdl", context )
-			PrecacheResource( "soundfile", "*.vsndevts", context )
-			PrecacheResource( "particle", "*.vpcf", context )
-			PrecacheResource( "particle_folder", "particles/folder", context )
-	]]
+	print("BEGIN TO PRECACHE RESOURCE")
+	local time = GameRules:GetGameTime()
+	PrecacheEveryThingFromKV( context )
+	PrecacheUnitByNameSync("npc_dota_hero_nevermore", context)
+	time = time - GameRules:GetGameTime()
+	print("DONE PRECACHEING IN:"..tostring(time).."Seconds")
 end
 
 -- Create the game mode when we activate
@@ -42,7 +73,7 @@ function CSfwarsGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetTopBarTeamValuesVisible( false )
 	GameRules:SetSameHeroSelectionEnabled( true )
 	GameRules:SetUseBaseGoldBountyOnHeroes( true )
-	GameRules:SetRuneSpawnTime( 30 )
+	GameRules:SetRuneSpawnTime( 60 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
 	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 1 )
@@ -65,13 +96,14 @@ function CSfwarsGameMode:InitGameMode()
 	GameRules:GetGameModeEntity():SetRuneSpawnFilter( Dynamic_Wrap( CSfwarsGameMode, "FilterRuneSpawn" ), self )
 	
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( CSfwarsGameMode, 'OnGameRulesStateChange' ), self )
-	ListenToGameEvent( "dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnNPCSpawned"), self)
+	ListenToGameEvent( "dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnPlayerPickHero"), self)
 	ListenToGameEvent( "dota_team_kill_credit", Dynamic_Wrap( CSfwarsGameMode, 'OnTeamKillCredit' ), self )
-
+    --ListenToGameEvent( "player_disconnect", Dynamic_Wrap(CSfwarsGameMode, "OnPlayerDisconnect"), self)
+	--ListenToGameEvent( "player_reconnect", Dynamic_Wrap(CSfwarsGameMode, "OnPlayerReconnect"), self)
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 	--初始化游戏
 	if temp_flag == 0 then
-		CSfwarsGameMode:_InitGameStats()
+		_InitGameStats()
 		temp_flag =1
 	end
 	
@@ -108,6 +140,7 @@ function CSfwarsGameMode:OnGameRulesStateChange()
 	end
 
 	if nNewState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
+		 _NotificationShop()
 	end
 end
 
@@ -128,14 +161,16 @@ function CSfwarsGameMode:FilterRuneSpawn( filterTable )
 	return true
 end
 
-function CSfwarsGameMode:OnNPCSpawned(keys)
+function CSfwarsGameMode:OnPlayerPickHero(keys)
 	local unit =  EntIndexToHScript(keys.heroindex)
 	if unit:IsHero() then                      --如果是英雄
+		local nPlayerid = unit:GetPlayerID()
 		local temp_auto6=unit:GetAbilityByIndex(3)
 		local temp_auto7=unit:GetAbilityByIndex(4)
 		temp_auto6:SetLevel(1)
 		temp_auto7:SetLevel(1)
 		unit:SetModifierStackCount("modifier_nevermore_necromastery",nil,36) 
+		_UpdatePlayerColor( nPlayerid )
 	end
 end
 
@@ -168,3 +203,17 @@ function CSfwarsGameMode:OnTeamKillCredit( event )
 	CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
 end
 
+--[[function CSfwarsGameMode:OnPlayerDisconnect( keys )
+    local unit =  PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
+	if unit:IsHero() then                    
+		unit:AddNewModifier(unit, nil, "modifier_invulnerable", nil)
+	end
+end
+
+function CSfwarsGameMode:OnPlayerReconnect( keys )
+    local unit =  PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
+	if unit:IsHero() then                    
+		unit:RemoveModifierByName("modifier_invulnerable")
+	end
+end
+]]

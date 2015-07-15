@@ -2,7 +2,6 @@
 
 function UpdateTimer( data )
 {
-	//$.Msg( "UpdateTimer: ", data );
 	var timerValue = Game.GetDOTATime(false,false);
 	var sec = Math.floor( timerValue % 60 );
 	var min = Math.floor( timerValue / 60 );

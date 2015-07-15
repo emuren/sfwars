@@ -1,0 +1,19 @@
+.showcontent #content
+{
+ 	visibility: visible;
+}
+#content
+{
+    margin-left: 50px;
+    margin-top: 150px;
+    flow-children: down;
+    visibility: collapse;
+}
+#NtText
+{
+    font-size:20px;
+    font-weight:bold;
+    color:#ffffff;
+
+
+}

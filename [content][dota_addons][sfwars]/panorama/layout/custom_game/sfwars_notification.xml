@@ -1,0 +1,14 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/dotastyles.css" />
+		<include src="file://{resources}/styles/custom_game/sfwars_notification.css" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/custom_game/sfwars_notification.js" />
+	</scripts>
+    <Panel>
+        <Panel id="content">
+			<Label id="NtText" text="" />
+		</Panel>
+	</Panel>
+</root>

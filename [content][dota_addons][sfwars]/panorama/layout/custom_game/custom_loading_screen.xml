@@ -3,10 +3,13 @@
 		<include src="file://{resources}/styles/dotastyles.css" />
 		<include src="file://{resources}/styles/custom_game/custom_loading_screen.css" />
 	</styles>
-	<Panel class="OverthrowLoadingRoot">
+	<Panel class="SfwarsLoadingRoot">
 		<Panel id="seq" >
 			<Image id="seq_bg" class="SeqBg" src="file://{images}/custom_game/loading_screen/loading_seq_bg.png" />
 			<Image id="seq_logo" class="SeqLogo" src="file://{images}/custom_game/loading_screen/loading_seq_logo.png" />
+		</Panel>
+		<Panel id="TipsPanel">
+			<Label id="sfwars_tips" text="----两个商店分别位于中间高台的左边和地图的右上方，储存处的物品可以在左下方的商店拿到\n----大幅下调了物品价格,上调初始金钱至725\n----调整神符刷新时间为1分钟\n----略微上调影魔的力量成长，他看起来更加强壮了\n----如发现bug可在创意工坊处留言\n----作者（XH）邮箱（jhhao2009@hotmail.com）\n----新的地形正在制作中，即将加入新的奖励系统" />
 		</Panel>
 	</Panel>
 </root>

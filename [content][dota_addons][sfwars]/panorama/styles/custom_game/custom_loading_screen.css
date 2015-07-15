@@ -2,7 +2,7 @@
 @define TimingFunc: ease;
 @define IterationCount: 10;
 
-.OverthrowLoadingRoot
+.SfwarsLoadingRoot
 {
     width: 100%;
     height: 100%;
@@ -33,15 +33,20 @@
 	box-shadow: inset black 5px 5px 10px 10px;
 }
 
-#TitlePanel
+#TipsPanel
 {
 	horizontal-align: left;
 	vertical-align: bottom;
-	margin-bottom: 150px;
-	margin-left: 100px;
-	flow-children: right;
+	margin-bottom: 100px;
+	margin-left: 55px;
+	flow-children: down;
+	color:#ffffff;
 }
-
+#sfwars_tips
+{
+	color:#ffffff;
+	font-size:18px;
+}
 
 .SeqLogo
 {

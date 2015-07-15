@@ -1,5 +1,5 @@
 --游戏初始化
-function CSfwarsGameMode:_InitGameStats()
+function _InitGameStats()
 --定义随机数种子
 	local timeTxt = string.gsub(string.gsub(GetSystemTime(), ':', ''), '0','') 
 	math.randomseed(tonumber(timeTxt))
@@ -45,5 +45,18 @@ function CSfwarsGameMode:_InitGameStats()
 	_GameStats["team_win_message"][DOTA_TEAM_CUSTOM_8] = "#VictoryMessage_Custom8"
 
 end
+function _UpdatePlayerColor( nPlayerID )
+	if nPlayerID == nil then
+		return
+	end
+	local teamID = PlayerResource:GetTeam( nPlayerID )
+	local color = _GameStats["team_color"][teamID]
+	if color then
+		PlayerResource:SetCustomPlayerColor( nPlayerID, color[1], color[2], color[3] )
+	end
+end
 
+function _NotificationShop()
+	CustomUI:DynamicHud_Create(-1,"mainWin","file://{resources}/layout/custom_game/sfwars_notification.xml",nil)
+end
 	
