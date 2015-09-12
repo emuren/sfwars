@@ -74,18 +74,21 @@ function CSfwarsGameMode:InitGameMode()
 	GameRules:SetSameHeroSelectionEnabled( true )
 	GameRules:SetUseBaseGoldBountyOnHeroes( true )
 	GameRules:SetRuneSpawnTime( 60 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_5, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_7, 1 )
-	GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_8, 1 )
 
-
+	if GetMapName() == "desert_8players_solo" then
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_1, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_2, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_3, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_4, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_5, 1 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_CUSTOM_6, 1 )
+	elseif GetMapName() == "desert_4vs4" then
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_GOODGUYS, 4 )
+		GameRules:SetCustomGameTeamMaxPlayers( DOTA_TEAM_BADGUYS, 4 )
+	end
+	
 	GameRules:GetGameModeEntity():SetLoseGoldOnDeath( false )
 	GameRules:GetGameModeEntity():SetBuybackEnabled( false )
 	GameRules:GetGameModeEntity():SetRecommendedItemsDisabled( true )
@@ -98,8 +101,6 @@ function CSfwarsGameMode:InitGameMode()
 	ListenToGameEvent( "game_rules_state_change", Dynamic_Wrap( CSfwarsGameMode, 'OnGameRulesStateChange' ), self )
 	ListenToGameEvent( "dota_player_pick_hero", Dynamic_Wrap(CSfwarsGameMode, "OnPlayerPickHero"), self)
 	ListenToGameEvent( "dota_team_kill_credit", Dynamic_Wrap( CSfwarsGameMode, 'OnTeamKillCredit' ), self )
-    --ListenToGameEvent( "player_disconnect", Dynamic_Wrap(CSfwarsGameMode, "OnPlayerDisconnect"), self)
-	--ListenToGameEvent( "player_reconnect", Dynamic_Wrap(CSfwarsGameMode, "OnPlayerReconnect"), self)
 	GameRules:GetGameModeEntity():SetThink( "OnThink", self, "GlobalThink", 2 )
 	--初始化游戏
 	if temp_flag == 0 then
@@ -129,18 +130,22 @@ function CSfwarsGameMode:OnGameRulesStateChange()
 
 	if nNewState == DOTA_GAMERULES_STATE_PRE_GAME then
 		_GameStats['number_of_players'] = PlayerResource:GetPlayerCount()
+		if _GameStats["vitoryxs"] == nil then
+			_GameStats["vitoryxs"] = 1
+		end
 		if _GameStats['number_of_players'] > 7 then
-			_GameStats['score_to_win'] = 30
+			_GameStats['score_to_win'] = 30 * _GameStats["vitoryxs"]
 		elseif _GameStats['number_of_players'] > 4 and _GameStats['number_of_players'] <= 7 then
-			_GameStats['score_to_win'] = 25
+			_GameStats['score_to_win'] = 25 * _GameStats["vitoryxs"]
 		else
-			_GameStats['score_to_win'] = 20
+			_GameStats['score_to_win'] = 20 * _GameStats["vitoryxs"]
 		end
 		CustomNetTables:SetTableValue( "game_state", "victory_condition", { kills_to_win = _GameStats['score_to_win'] } )
 	end
 
 	if nNewState == DOTA_GAMERULES_STATE_GAME_IN_PROGRESS then
 		 _NotificationShop()
+		 _CheckConnected()
 	end
 end
 
@@ -152,12 +157,17 @@ function CSfwarsGameMode:BountyRunePickupFilter( filterTable )
     filterTable["gold_bounty"] = 100
     return true
 end
-function CSfwarsGameMode:FilterRuneSpawn( filterTable )
-	local sfwars_rune_type =  math.random( 5 ) 
-	if  sfwars_rune_type == 2 or sfwars_rune_type == nil then
-		sfwars_rune_type = 5
+function CSfwarsGameMode:FilterRuneSpawn( filterTable )	
+	local nRandom =  math.random( 100 ) 
+	if nRandom <= 70 then
+		filterTable["rune_type"] = 5
+	elseif nRandom > 70 and nRandom <= 80 then
+		filterTable["rune_type"] = 4
+	elseif nRandom > 80 and nRandom <= 90 then
+		filterTable["rune_type"] = 3
+	else
+		filterTable["rune_type"] = 1
 	end
-	filterTable["rune_type"] = sfwars_rune_type
 	return true
 end
 
@@ -203,17 +213,4 @@ function CSfwarsGameMode:OnTeamKillCredit( event )
 	CustomGameEventManager:Send_ServerToAllClients( "kill_event", broadcast_kill_event )
 end
 
---[[function CSfwarsGameMode:OnPlayerDisconnect( keys )
-    local unit =  PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
-	if unit:IsHero() then                    
-		unit:AddNewModifier(unit, nil, "modifier_invulnerable", nil)
-	end
-end
 
-function CSfwarsGameMode:OnPlayerReconnect( keys )
-    local unit =  PlayerResource:GetSelectedHeroEntity(keys.PlayerID)
-	if unit:IsHero() then                    
-		unit:RemoveModifierByName("modifier_invulnerable")
-	end
-end
-]]

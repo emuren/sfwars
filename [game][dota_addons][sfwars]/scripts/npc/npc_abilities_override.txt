@@ -11,7 +11,7 @@
 	{
 		"MaxLevel"						"7"
 		"AbilityCastPoint"				"0.67 0.67 0.67 0.67 0.67 0.67 0.67"
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0 10.0 10.0 10.0"
+		"AbilityCooldown"				"10"
 		"AbilityDamage"					"285 300 315 330 350 380 420"
 		"AbilityManaCost"				"0 0 0 0 0 0 0"
 		"LevelsBetweenUpgrades" 		"1"
@@ -20,7 +20,7 @@
 	{
 		"MaxLevel"						"7"
 		"AbilityCastPoint"				"0.67 0.67 0.67 0.67 0.67 0.67 0.67"
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0 10.0 10.0 10.0"
+		"AbilityCooldown"				"10"
 		"AbilityDamage"					"285 300 315 330 350 380 420"
 		"AbilityManaCost"				"0 0 0 0 0 0 0"
 		"LevelsBetweenUpgrades" 		"1"
@@ -29,7 +29,7 @@
 	{
 		"MaxLevel"						"7"
 		"AbilityCastPoint"				"0.67 0.67 0.67 0.67 0.67 0.67 0.67"
-		"AbilityCooldown"				"10.0 10.0 10.0 10.0 10.0 10.0 10.0"
+		"AbilityCooldown"				"10"
 		"AbilityDamage"					"285 300 315 330 350 380 420"
 		"AbilityManaCost"				"0 0 0 0 0 0 0"
 		"LevelsBetweenUpgrades" 		"1"
@@ -616,6 +616,64 @@
 			}
 		}
 	}
+"item_recipe_cyclone"
+	{
+
+		
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemCost"						"0"	
+		"SecretShop"    			"1"
+		"SideShop"    				"0"
+		
+		// Recipe
+		//-------------------------------------------------------------------------------------------------------------
+		"ItemRecipe"					"1"
+		"ItemResult"					"item_cyclone"
+		"ItemRequirements"
+		{
+			"01"						"item_hccyclone;item_hccyclone"
+		}
+	}
+
+"item_cyclone"
+	{
+
+		// Stats		
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityCooldown"				"30.0"
+		"SecretShop"    			"1"
+		"SideShop"    				"0"
+		// Item Info
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilityManaCost"				"0"
+		"ItemCost"						"1000"
+	// Special	
+		//-------------------------------------------------------------------------------------------------------------
+		"AbilitySpecial"
+		{
+			"01"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_intellect"		"0"
+			}
+			"02"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_mana_regen"		"0"
+			}
+			"03"
+			{
+				"var_type"				"FIELD_INTEGER"
+				"bonus_movement_speed"	"0"
+			}
+			"04"
+			{
+				"var_type"				"FIELD_FLOAT"
+				"cyclone_duration"		"2.5"
+			}
+		}
+	}
 	//=============================================
 	//removeallitemsfromtheshop
 	//=============================================
@@ -708,8 +766,6 @@
 	"item_sheepstick"			"REMOVE"
 	"item_recipe_orchid"			"REMOVE"
 	"item_orchid"			"REMOVE"
-	"item_recipe_cyclone"			"REMOVE"
-	"item_cyclone"			"REMOVE"
 	"item_recipe_force_staff"			"REMOVE"
 	"item_force_staff"			"REMOVE"
 	"item_recipe_dagon"			"REMOVE"

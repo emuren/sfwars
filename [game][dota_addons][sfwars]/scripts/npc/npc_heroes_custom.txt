@@ -17,10 +17,10 @@
 		"Ability5"			"nevermore_wudi"
 		"Ability6" 			"nevermore_requiem"
 		"AttackCapabilities"        	"DOTA_UNIT_CAP_NO_ATTACK"
-		"BountyXP"                  "50"                     // 经验奖励
-        "BountyGoldMin"             "10"                    // 最小金钱奖励
+		"BountyXP"                  "80"                     // 经验奖励
+        "BountyGoldMin"             "40"                    // 最小金钱奖励
         "BountyGoldMax"             "50"  
-		"StatusHealth"              "320"       // 基础生命值
+		"StatusHealth"              "370"       // 基础生命值
         "StatusHealthRegen"         "0.5"      
 		"HPGain"                    "0"                   // 升级增加生命值上限
         "DamageGain"                "0"                    // 升级增加攻击力
@@ -30,9 +30,9 @@
         "BountyGain"                "0"                    // 升级增加赏金奖励
         "XPGain"                    "0"                   // 升级增加经验值上限
 		"AttributeBaseStrength"     "20"                         // 基础力量
-        "AttributeStrengthGain"     "3"                         // 力量成长
-		"VisionDaytimeRange"        "1500"          // 白天视野范围
-        "VisionNighttimeRange"      "1200"           // 夜晚视野范围
+        "AttributeStrengthGain"     "2.8"                         // 力量成长
+		"VisionDaytimeRange"        "1800"          // 白天视野范围
+        "VisionNighttimeRange"      "1500"           // 夜晚视野范围
 
 	}
 }

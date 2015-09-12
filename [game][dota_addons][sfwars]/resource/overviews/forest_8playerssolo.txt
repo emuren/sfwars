@@ -1,0 +1,8 @@
+forest_8playerssolo
+{
+	material materials/overviews/forest_8playerssolo.vmat
+	pos_x -4349
+	pos_y 4314
+	scale 8.506
+}
+

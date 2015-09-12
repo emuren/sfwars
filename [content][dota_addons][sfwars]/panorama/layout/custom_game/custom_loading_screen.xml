@@ -9,7 +9,7 @@
 			<Image id="seq_logo" class="SeqLogo" src="file://{images}/custom_game/loading_screen/loading_seq_logo.png" />
 		</Panel>
 		<Panel id="TipsPanel">
-			<Label id="sfwars_tips" text="----两个商店分别位于中间高台的左边和地图的右上方，储存处的物品可以在左下方的商店拿到\n----大幅下调了物品价格,上调初始金钱至725\n----调整神符刷新时间为1分钟\n----略微上调影魔的力量成长，他看起来更加强壮了\n----如发现bug可在创意工坊处留言\n----作者（XH）邮箱（jhhao2009@hotmail.com）\n----新的地形正在制作中，即将加入新的奖励系统" />
+			<Label id="sfwars_tips" text="----商店和符点均位于河道的两端\n----添加道具：风杖\n----尝试性给掉线英雄增加无敌buff以防成为提款机\n----黑色阴影bug尚不知原因未修复\n----作者正在准备考研所以目前时间不足以更多改动及修复\n----如果你有兴趣做改动及修复，可以邮件\n----待研后会有更多脑洞作品\n----如发现bug可在创意工坊处留言\n----作者（XH）邮箱（jhhao2009@hotmail.com）\n----我希望收到你们的建议，以便更好地平衡数据" />
 		</Panel>
 	</Panel>
 </root>

@@ -1,0 +1,8 @@
+desert_8players_solo
+{
+	material materials/overviews/desert_8players_solo.vmat
+	pos_x -5280
+	pos_y 5248
+	scale 10.250
+}
+

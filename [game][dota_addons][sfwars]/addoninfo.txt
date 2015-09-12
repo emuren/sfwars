@@ -1,10 +1,13 @@
 "AddonInfo"
 {
-	"TeamCount"		"10"
-	"maps"			"sf_wars"
+	maps			"desert_8players_solo desert_4vs4"
 	"IsPlayable"	"1"
-	"rpg_example"
+	"desert_8players_solo"
 	{
-		"MaxPlayers"                    "10"
+					"MaxPlayers"                    "8"
+	}
+	"desert_4vs4"
+	{
+					"MaxPlayers"                    "8"
 	}
 }

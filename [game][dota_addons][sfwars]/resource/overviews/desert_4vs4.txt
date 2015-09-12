@@ -1,0 +1,8 @@
+desert_4vs4
+{
+	material materials/overviews/desert_4vs4.vmat
+	pos_x -5216
+	pos_y 5312
+	scale 10.250
+}
+

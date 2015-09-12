@@ -8,22 +8,29 @@ function _InitGameStats()
    _GameStats={}
    _GameStats['number_of_players'] = 10
    _GameStats['score_to_win'] = 25
-   for i=0,9 do
+   for i=0,31 do
      _PlayerStats[i]={}  --每个玩家的数据包
      _PlayerStats[i]['score']=0
+	 _PlayerStats[i]['connected']=1
    end
+ --设置胜任分数系数
+	if GetMapName() == "desert_4vs4" then
+		_GameStats["vitoryxs"] = 2
+	else
+		_GameStats["vitoryxs"] = 1
+	end
  --设置队伍血条颜色
 	_GameStats["team_color"]={}
 	_GameStats["team_color"][DOTA_TEAM_GOODGUYS] = { 52, 85, 255 }	--		lan
 	_GameStats["team_color"][DOTA_TEAM_BADGUYS]  = { 243, 201, 9 }	--		fen
 	_GameStats["team_color"][DOTA_TEAM_CUSTOM_1] = { 197, 77, 168 }	--      qing
 	_GameStats["team_color"][DOTA_TEAM_CUSTOM_2] = { 255, 108, 0 }		--		Orange
-	_GameStats["team_color"][DOTA_TEAM_CUSTOM_3] = { 61, 210, 150 }		--		Blue
+	_GameStats["team_color"][DOTA_TEAM_CUSTOM_3] = { 140, 42, 244 }		--		Blue
 	_GameStats["team_color"][DOTA_TEAM_CUSTOM_4] = { 101, 212, 19 }	--		Green
 	_GameStats["team_color"][DOTA_TEAM_CUSTOM_5] = { 129, 83, 54 }		--		Brown
 	_GameStats["team_color"][DOTA_TEAM_CUSTOM_6] = { 27, 192, 216 }	--		Cyan
 	_GameStats["team_color"][DOTA_TEAM_CUSTOM_7] = { 199, 228, 13 }	--		Olive
-	_GameStats["team_color"][DOTA_TEAM_CUSTOM_8] = { 140, 42, 244 }	--		Purple zi
+	_GameStats["team_color"][DOTA_TEAM_CUSTOM_8] = { 61, 210, 150 }	--		Purple zi
 	
 	for team = 0, (DOTA_TEAM_COUNT-1) do
 		local color = _GameStats["team_color"][ team ]
@@ -43,6 +50,8 @@ function _InitGameStats()
 	_GameStats["team_win_message"][DOTA_TEAM_CUSTOM_6] = "#VictoryMessage_Custom6"
 	_GameStats["team_win_message"][DOTA_TEAM_CUSTOM_7] = "#VictoryMessage_Custom7"
 	_GameStats["team_win_message"][DOTA_TEAM_CUSTOM_8] = "#VictoryMessage_Custom8"
+	
+
 
 end
 function _UpdatePlayerColor( nPlayerID )
